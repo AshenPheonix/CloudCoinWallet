@@ -22,13 +22,13 @@
           if (back[0].substring(back[0].length-3)=='csv') {
             conv.fromFile(back[0],(err,res) => {
               var tester={dat:0,tests:0,success:[],fail:[]}
-              var coin=new CCoin()
+              var backupArray=[];
               for(let prop in res[0]) {
                 if (prop.includes('an')) {
-
-                  $.get('')
+                    backupArray.push(prop);
                 }
               }
+              console.log(backupArray);
             })
           }
         }

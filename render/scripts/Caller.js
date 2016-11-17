@@ -23,7 +23,7 @@ class Caller {
     }else if (this.success+this.fails.length==25) {
       watcher.trigger('success',this.coin)
       $.each('this.fails', function(index, val) {
-        $.get('path')
+        $.get('')
       });
     }
   })
