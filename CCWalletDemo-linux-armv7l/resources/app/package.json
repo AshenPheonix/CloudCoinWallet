@@ -1,0 +1,26 @@
+{
+  "name": "wallet",
+  "version": "1.0.0",
+  "description": "Wallet for Cloud Coins",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brandon Porter",
+  "license": "MIT",
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "buffer-to-string": "^0.1.0",
+    "convert-hex": "^0.1.0",
+    "csvtojson": "^1.0.3",
+    "electron": "^1.4.4",
+    "fast-csv": "^2.3.0",
+    "hex": "^0.1.0",
+    "jpeg-exif": "^1.0.5",
+    "jpeg-marker-stream": "^1.0.0",
+    "jquery": "^3.1.1",
+    "md5": "^2.2.1",
+    "number-convert": "^1.0.0",
+    "riot": "^2.6.4"
+  }
+}
