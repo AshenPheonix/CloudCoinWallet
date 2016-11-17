@@ -1,5 +1,5 @@
-class Caller {
-  constructor(coin) {
+Caller = class {
+  constructor(coin){
     this.coin=coin;
     this.success=0;
     this.fails=[];
@@ -11,7 +11,7 @@ class Caller {
   own(){
 
   }
-  this.on('returned', (back) => {
+  returned(back){
     if (back.validation==true) {
       this.success=true
     }else {
@@ -23,8 +23,8 @@ class Caller {
     }else if (this.success+this.fails.length==25) {
       watcher.trigger('success',this.coin)
       $.each('this.fails', function(index, val) {
-        $.get('')
+        //$.get('')
       });
     }
-  })
+  }
 }

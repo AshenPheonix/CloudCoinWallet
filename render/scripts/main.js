@@ -1,7 +1,7 @@
 window.$=window.jQuery=require('jQuery')
 const riot = require('riot')
-require('./scripts/CCoin.js')
 require('./scripts/observer.js');
+require('./scripts/Caller.js');
 
 require('./views/index.js')
 require('./views/navigate.js')
