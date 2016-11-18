@@ -27,7 +27,6 @@
     good=true
     good=false
     toSend={}
-    const md5 = require('md5');
 
     test(e){
       var toTest=this.serial.value

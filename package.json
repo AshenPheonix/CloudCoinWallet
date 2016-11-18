@@ -9,22 +9,24 @@
   "author": "Brandon Porter",
   "license": "MIT",
   "devDependencies": {
-    "any-base": "^1.0.0",
-    "bootstrap": "^3.3.7",
     "buffer-to-string": "^0.1.0",
-    "convert-hex": "^0.1.0",
-    "csvtojson": "^1.0.3",
     "dec-to-hex": "^2.0.0",
-    "electron": "^1.4.4",
     "fast-csv": "^2.3.0",
     "hex": "^0.1.0",
     "jpeg-exif": "^1.0.5",
     "jpeg-marker-stream": "^1.0.0",
-    "jquery": "^3.1.1",
     "md5": "^2.2.1",
     "md5-hex": "^1.3.0",
     "number-convert": "^1.0.0",
+  },
+  "electron": "^1.4.4",
+  "dependencies":{
+    "any-base": "^1.0.0",
     "random-bytes": "^1.0.0",
-    "riot": "^2.6.4"
+    "riot": "^2.6.4",
+    "jquery": "^3.1.1",
+    "csvtojson": "^1.0.3",
+    "convert-hex": "^0.1.0",
+    "bootstrap": "^3.3.7"
   }
 }
