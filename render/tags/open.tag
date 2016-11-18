@@ -18,7 +18,7 @@
       font-size: 10pt;
       padding: 5px;
     }
-    li :hover{
+    li:hover{
       cursor: pointer;
     }
   </style>
@@ -27,6 +27,8 @@
   //require('../views/manual.js')
   //require('../views/image.js')
   require('../views/text.js')
+  var app=require('electron').remote
+  var dialog=app.dialog
 
   var tag=null;
 
@@ -49,6 +51,12 @@
       this.tag=riot.mount('div#update-target','text')[0]
     }
 
+    watcher.on('CoinFail', () => {
+      dialog.showMessageBox({message:"One or more coins failed validation",buttons:['Okay']});
+    })
+    watcher.on('success', () => {
+      dialog.showMessageBox({messaage:"Success",buttons:['Okay']})
+    })
 
   </script>
 </open>

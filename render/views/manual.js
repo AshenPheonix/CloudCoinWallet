@@ -66,22 +66,4 @@ riot.tag2('manual', '<fieldset> <legend>Please Enter Your Information</legend><b
       }
     }.bind(this)
 
-    this.count = function(){
-      self.counter++
-      if(self.counter==25){
-        self.counter=0
-        self.send()
-      }
-    }.bind(this)
-
-    this.send = function(){
-      if (self.good=true) {
-        this.serial.value=""
-        self.denom=0
-        self.AN.value=""
-        store.currentHeld.push(toSend)
-
-      }
-    }.bind(this)
-
 });

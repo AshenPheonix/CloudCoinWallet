@@ -87,23 +87,5 @@
       }
     }
 
-    count(){
-      self.counter++
-      if(self.counter==25){
-        self.counter=0
-        self.send()
-      }
-    }
-
-    send(){
-      if (self.good=true) {
-        this.serial.value=""
-        self.denom=0
-        self.AN.value=""
-        store.currentHeld.push(toSend)
-
-      }
-    }
-
   </script>
 </manual>

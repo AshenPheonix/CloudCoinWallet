@@ -1,8 +1,7 @@
 var fs=require('fs')
 store={
   server:{},
-  currentHeld:{manual:[],text:[],image:[]},
-  currentTests:[]
+  currentHeld:{manual:[],text:[],image:[]}
 }
 
 function spy(){
@@ -46,7 +45,8 @@ function spy(){
 
   this.on('serverUpdate',()=>{})
   this.on('updateScreen', () => {})
-  this.on('testRet', () => {})
+  this.on('success', () => {})
+  this.on('CoinFail', () => {})
 }
 
 watcher=new spy(store);
