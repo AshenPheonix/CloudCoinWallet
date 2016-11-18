@@ -7,6 +7,7 @@ require('./views/index.js')
 require('./views/navigate.js')
 require('./views/servers.js')
 require('./views/open.js')
+require('./views/posess.js');
 riot.mount('navigate')
 
 var tag=null;
@@ -36,6 +37,13 @@ riot.route('/test',() => {
     tag.unmount(true);
   }
   tag=riot.mount('div#render-target','servers')[0]
+})
+
+riot.route('/posess',() => {
+  if (tag!=null) {
+    tag.unmount(true);
+  }
+  tag=riot.mount('div#render-target','posess')[0]
 })
 
 riot.route.start(true)

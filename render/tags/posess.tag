@@ -1,6 +1,7 @@
-<open>
+<posess>
+
   <p>
-    How do you wish to enter your coins?
+    How do you wish to take control of your coins?
   </p>
   <ul>
     <li onclick={manual}>Manually Entered</li>
@@ -63,7 +64,7 @@
             toTest=toTest.coins;
           }
           var testing=new Caller(toTest[0])
-          testing.validate(which);
+          testing.take(which);
           //$.each(toTest, function(index, val) {
           //  var testing= new Caller(val)
           //  testing.validate()
@@ -81,4 +82,5 @@
     })
 
   </script>
-</open>
+
+</posess>

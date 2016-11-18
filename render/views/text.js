@@ -6,8 +6,10 @@ riot.tag2('text', '', '', '', function(opts) {
     var conv=new Converter({});
     require('../scripts/Caller.js');
     require('../scripts/CCoin.js');
+    var self=this
 
     this.on('mount', () => {
+      this.parent=opts.parent
       dialog.showOpenDialog((back) => {
         if (back==undefined) {
           console.log("none found");
@@ -37,21 +39,7 @@ riot.tag2('text', '', '', '', function(opts) {
               fs.writeFile('data/coins/current.ccc', JSON.stringify(CCC));
             })
           }else if (back[0].substr(back[0].length-4)=='json' || back[0].substr(back[0].length-3)=='ccc') {
-            fs.readFile(back[0], 'utf-8',(err,data) => {
-              if (err) {
-                console.error(err);
-              }else {
-
-                var toTest=JSON.parse(data);
-                if (toTest.coins!==undefined) {
-                  toTest=toTest.coins;
-                }
-                var testing=new Caller(toTest[0])
-                testing.validate();
-
-              }
-
-            });
+            self.parent.command(back[0],'text')
           }
         }
       })
