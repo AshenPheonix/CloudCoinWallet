@@ -6,9 +6,11 @@ Caller = class {
     this.coin=coin;
     this.success=0;
     this.fails=[];
+    this.errors=[];
+    this.reasons=[];
   }
 
-  validate(type){
+  validate(){
     self=this
     var denom=0;
     if (this.coin.sn>0&&this.coin.sn<2097153) {
@@ -30,32 +32,27 @@ Caller = class {
         an:self.coin.an[index],
         pan:self.coin.an[index]
       }
-      $.get('https://'+vals.url+'/service/detect.'+vals.ext,sender,(dat) => {
+      $.get(vals.protocol+'://'+vals.url+'/service/detect.'+vals.ext,sender,(dat) => {
         var response=JSON.parse(dat);
-        if (response.status=='pass') {
+        if (response.sn!=self.coin.sn) {
+
+        }else if (response.status=='pass') {
           self.success++;
         }else {
           self.fails.push(index)
+          self.reasons.push(response.message);
         }
-        if (self.success==20) {
-          switch (type) {
-            case 'text':
-              store.currentHeld.text.push(self.coin)
-
-              break;
-            default:
-
-          }
+        if (self.fails.length+self.success+self.errors.length==25&&self.success>=20) {
+          store.currentHeld[0].push(self.coin)
           watcher.trigger('success')
-        }else if (self.fails.length>5) {
-          watcher.trigger('CoinFail')
-        }else if (self.fails.length+self.success==25) {
           self.fix();
+        }else{
+          if (store.failed.includes(self.coin)==false) {
+            store.failed.push({coin:self.coin,reasons:[self.reasons]})
+            watcher.trigger('CoinFail')
+          }
         }
       }).fail((err) => {
-        self.fails.push(self.coin)
-        watcher.trigger('success')
-        console.log('error ::'+err);
       })
     });
   }
@@ -64,7 +61,7 @@ Caller = class {
     console.log('fixing');
   }
 
-  take(type){
+  take(){
     //getting random bytes
     rb(400,(err,bytes) => {
       if (err) {
@@ -85,38 +82,27 @@ Caller = class {
           var sender={
             nn:self.coin.nn,
             sn:self.coin.sn,
-            denomination:denom,
+            denomination:self.coin.denomination,
             an:self.coin.an[index],
             pan:PANArray[index]
           }
-          $.get('https://'+vals.url+'/service/detect.'+vals.ext,sender,(dat) => {
+          $.get(vals.protocol+'://'+vals.url+'/service/detect.'+vals.ext,sender,(dat) => {
             var response=JSON.parse(dat);
-            if (response.status=='pass') {
+            if (response.sn!=self.coin.sn) {
+
+            }else if (response.status=='pass') {
               self.success++;
             }else {
               self.fails.push(index)
             }
-            if (self.success==20) {
-              switch (type) {
-                case 'text':
-                  store.currentHeld.text.push(self.coin)
-                  break;
-                default:
-
-              }
-
-              //save coin immediately to prevent loss
-
-              watcher.trigger('success')
+            if (self.success>=20 && self.fails.length+self.success+self.errors.length==25) {
+              store.staging.push(self.coin);
             }else if (self.fails.length>5) {
               watcher.trigger('CoinFail')
             }else if (self.fails.length+self.success==25) {
               self.fix();
             }
           }).fail((err) => {
-            self.fails.push(self.coin)
-            watcher.trigger('success')
-            console.log('error ::'+err);
           })
         })
       }

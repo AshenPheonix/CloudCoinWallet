@@ -27,8 +27,6 @@
   //require('../views/manual.js')
   //require('../views/image.js')
   require('../views/text.js')
-  var app=require('electron').remote
-  var dialog=app.dialog
   const fs = require('fs');
 
   var tag=null;
@@ -52,33 +50,10 @@
       this.tag=riot.mount('div#update-target','text',{parent:this})[0]
     }
 
-    command(file,which){
-      fs.readFile(file, 'utf-8',(err,data) => {
-        if (err) {
-          console.error(err);
-        }else {
-          //parsing
-          var toTest=JSON.parse(data);
-          if (toTest.coins!==undefined) {
-            toTest=toTest.coins;
-          }
-          var testing=new Caller(toTest[0])
-          testing.validate(which);
-          //$.each(toTest, function(index, val) {
-          //  var testing= new Caller(val)
-          //  testing.validate()
-          //});
-        }
-        //test
-      });
+    command(){
+      watcher.failed=false;
+      watcher.trigger('validate')
     }
-
-    watcher.on('CoinFail', () => {
-      dialog.showMessageBox({message:"One or more coins failed validation",buttons:['Okay']});
-    })
-    watcher.on('success', () => {
-      dialog.showMessageBox({message:"Success",buttons:['Okay']})
-    })
 
   </script>
 </open>

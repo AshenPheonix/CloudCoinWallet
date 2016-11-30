@@ -1,22 +1,26 @@
-<servers>
+<servers >
 
-  <table>
-    <tr>
-      <td each={servers.server} class={failed:fail(this),success:!fail(this)}>
+  <ul>
+      <li each={servers.server} class={failed:fail(this),success:!fail(this)}>
         {(this.init==true)?'none':this.status}
-      </td>
-    </tr>
-  </table>
+      </li>
+  </ul>
 
-  <style media="screen" scoped>
+  <style scoped>
+    :scope li{
+      display: inline-block;
+      border-width: thin;
+      border-radius: 3px;
+      border-color: black;
+      border-style: ridge;
+      font-size: 8pt;
+      padding: 5px;
+    }
     .success{
       background-color: #1fc469;
     }
     .failed{
       background-color: #db3608
-    }
-    :scoped table{
-      width: 100%;
     }
   </style>
 
@@ -44,7 +48,7 @@
     })
 
     fail(which){
-      return (this.init || which.status=='unknown');
+      return (this.init || which.status!=='ready');
     }
   </script>
 

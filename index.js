@@ -1,10 +1,9 @@
 const {app,BrowserWindow}=require('electron');
-
+const path=require('path');
 let mainWindow
 
-
 function createWindow() {
-  mainWindow = new BrowserWindow({width: 1075, height: 600,frame:false})
+  mainWindow = new BrowserWindow({width: 1075, height: 600})
 
   mainWindow.loadURL(`file://${__dirname}/render/index.html`)
 

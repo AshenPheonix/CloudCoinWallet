@@ -1,4 +1,4 @@
-riot.tag2('servers', '<table> <tr> <td each="{servers.server}" class="{failed:fail(this),success:!fail(this)}"> {(this.init==true)?\'none\':this.status} </td> </tr> </table>', 'servers .success,[riot-tag="servers"] .success,[data-is="servers"] .success{ background-color: #1fc469; } servers .failed,[riot-tag="servers"] .failed,[data-is="servers"] .failed{ background-color: #db3608 } serversd table,[riot-tag="servers"]d table,[data-is="servers"]d table{ width: 100%; }', '', function(opts) {
+riot.tag2('servers', '<ul> <li each="{servers.server}" class="{failed:fail(this),success:!fail(this)}"> {(this.init==true)?\'none\':this.status} </li> </ul>', 'servers li,[riot-tag="servers"] li,[data-is="servers"] li{ display: inline-block; border-width: thin; border-radius: 3px; border-color: black; border-style: ridge; font-size: 8pt; padding: 5px; } servers .success,[riot-tag="servers"] .success,[data-is="servers"] .success{ background-color: #1fc469; } servers .failed,[riot-tag="servers"] .failed,[data-is="servers"] .failed{ background-color: #db3608 }', '', function(opts) {
     var fs=require('fs')
     self=this
     this.on('mount',()=>{
@@ -22,6 +22,6 @@ riot.tag2('servers', '<table> <tr> <td each="{servers.server}" class="{failed:fa
     })
 
     this.fail = function(which){
-      return (this.init || which.status=='unknown');
+      return (this.init || which.status!=='ready');
     }.bind(this)
 });

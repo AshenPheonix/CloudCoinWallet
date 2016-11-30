@@ -6,7 +6,6 @@ riot.tag2('manual', '<fieldset> <legend>Please Enter Your Information</legend><b
     good=true
     good=false
     toSend={}
-    const md5 = require('md5');
 
     this.test = function(e){
       var toTest=this.serial.value
