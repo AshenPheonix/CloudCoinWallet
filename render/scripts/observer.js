@@ -1,4 +1,5 @@
 var fs=require('fs')
+var app=require('electron').remote.app
 store={
   server:{},
   testing:[],
@@ -7,27 +8,37 @@ store={
   failed:[],
   stored:[[]],
   staging:[],
-  saveLocation:''
+  saveLocation:'',
+  disconnect:0,
+  toFix:[]
 }
 
 function spy(){
   riot.observable(this);
   var self=this
-  var failed=false;
+  this.failed=false;
   const fs = require('fs');
 
   this.on('start', () => {
+    if (fs.existsSync(app.getPath('appData')+'/CCwallet')==false) {
+      fs.mkdir(app.getPath('appData')+'/CCWallet')
+    }
+    if (fs.existsSync(app.getPath('appData')+'/CCwallet/data')==false) {
+      fs.mkdir(app.getPath('appData')+'/CCWallet/data')
+
+    }
     $.get('http://www.cloudcoin.co/servers.html',(d)=>{
       var temp=d.slice(d.indexOf('{'))
-      fs.writeFile(__dirname+'/../../data/servers.json', JSON.stringify(JSON.parse(temp)),(err) => {
+      fs.writeFile(app.getPath('appData')+'/CCWallet/data/servers.json', JSON.stringify(JSON.parse(temp)),(err) => {
         if (err) {
           console.error('file not found');
           console.error(err);
         }else {
+          store.disconnect=0;
           store.server=JSON.parse(temp).server;
           this.trigger('serverUpdate')
           $.each(JSON.parse(temp).server, function(index, val) {
-              $.get(val.protocol+'://'+val.url+'/service/echo.'+val.ext,(data,attempt) => {
+              $.get(val.protocol+'://'+val.url+'/service/echo',(data,attempt) => {
                   store.server[index].status=JSON.parse(data).status
                   self.trigger('serverUpdate')
               }).fail((err) => {
@@ -37,6 +48,7 @@ function spy(){
                 }else {
                   store.server[index].status='Error'
                 }
+                store.disconnect++;
               })
           })
         }
@@ -50,7 +62,6 @@ function spy(){
 
   this.on('test', (d) => {
     d.internal++;
-    console.log('done');
     this.trigger('testRet')
   })
 
@@ -104,7 +115,7 @@ function spy(){
       $.each(tempCoins, function(indexC, valC) {
         sum+=valC.denomination;
       });
-      fs.writeFile(app.getPath('appData')+'/CCWallet/OverflowSplit_'+indexS+'.'+sum+'.stack',JSON.stringify({coins:tempCoins}));
+      fs.writeFile(app.getPath('appData')+'/CCWallet/'+sum+'.OverflowSplit_'+indexS+'.stack',JSON.stringify({cloudcoin:tempCoins}));
     });
     dialog.showMessageBox({message:'Done',buttons:['Okay']});
     store.testing.length=0;
@@ -114,9 +125,8 @@ function spy(){
     if (store.currentDesired.length==0 || store.saveLocation=='' || store.saveLocation==undefined) {
       this.trigger('take');
     }else {
-      var temp=new Caller(store.currentDesired[0]);
+      temp=new Caller(store.currentDesired[0]);
       temp.take();
-      store.currentDesired.shift();
     }
   })
 
@@ -128,20 +138,65 @@ function spy(){
         sum+=val.denomination;
       });
       dialog.showSaveDialog({defaultPath:require('electron').remote.app.getPath('documents')},(b) => {
-        store.saveLocation=b+'.'+sum+'.stack';
-        this.trigger('take')
+        if (b!==undefined) {
+          store.saveLocation=b+'.'+sum+'.stack';
+          this.trigger('take')
+        }
       })
     }else if (store.currentDesired.length>0) {
       this.trigger('send');
-    }else if (store.staging>0) {
+    }else if (store.staging.length>0) {
       this.trigger('sendFinished');
     }
   })
 
   this.on('sendFinished', () => {
-    fs.writeFile(store.saveLocation, JSON.stringify({coins:store.staging}));
-    store.currentHeld.push(store.staging);
+    /*let temp=[];
+    $.each(store.staging, function(index, val) {
+      if (val.type!='text') {
+        temp.push(val);
+        store.staging.splice(store.staging.indexOf(val));
+      }
+    });
+
+    $.each(temp, function(index, val) {
+      let buff=new Buffer.from(val.stringify());
+      fs.open(val.loc,'wx',(err,fd) => {
+        if (err) {
+          console.error(err);
+        } else {
+          fs.write(fd,buff,0,buff.length,20,(writeErr,written, writeBuff) => {
+          })
+        }
+      });
+    });
+    */
+    fs.writeFile(store.saveLocation, JSON.stringify({cloudcoin:store.staging}));
+    var tempArray=[];
+    $.each(store.staging,(index,item) => {
+      tempArray.push(item);
+    })
+    store.currentHeld.push(tempArray);
     store.staging.length=0;
+    store.saveLocation='';
+    let templocs=[];
+    let tempSave=[[]]
+    $.each(store.currentHeld, function(sectIndex, sect) {
+      $.each(store.currentHeld, function(itemIndex, val) {
+        if (templocs.indexOf(val.loc)===-1) {
+          templocs.push(val.loc);
+        }
+        tempSave[templocs.indexOf(val.loc)].push(val);
+      });
+    });
+
+    /*
+    $.each(templocs, function(index, val) {
+      fs.writeFile(val, JSON.stringify({cloudcoin:tempSave[index]}));
+    });
+    */
+
+    this.trigger('updateScreen')
   })
 }
 

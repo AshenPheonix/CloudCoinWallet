@@ -1,7 +1,7 @@
 <display>
   <section class="container-fluid">
 
-    <div id="display-field" class="col-md-6" ondragover={allowDrag} ondrop={dropOpen}>
+    <div id="display-field" class="col-md-6">
       <h2>Currently Open Coins </h2>
       <div each={splits, iSplit in store.currentHeld}>
         <ul>
@@ -12,6 +12,10 @@
               <p class="right">
                 Denomination :{coin.denomination}
               </p>
+            </div>
+            <div if={coin.type=='image'} class="image-item col-md-12">
+              <img src={coin.extra[0]} alt="coin" class="img-responsive">
+              <p class='right'>Denomination :{coin.denomination}</p>
             </div>
             <div class="button-set right col-md-12">
               <button each={sp, i in store.currentHeld} if={sp.includes(coin)==false} type="button" onclick={moveTo} value={coin}>Add To Split {i}</button>
@@ -33,6 +37,10 @@
             <p class="right">
               Denomination :{coin.denomination}
             </p>
+          </div>
+          <div if={coin.type=='image'} class="image-item col-md-12">
+            <img src={coin.extra[0]} alt="coin" class="img-responsive">
+            <p class='right'>Denomination :{coin.denomination}</p>
           </div>
           <div class="button-set right col-md-12">
             <button type="button" onclick={return}>Return</button>
@@ -115,6 +123,10 @@
     store.currentDesired.splice(store.currentDesired.indexOf(e.item.coin),1)
     this.update()
   }
+
+  watcher.on('updateScreen',() => {
+    this.update();
+  })
   </script>
 
 </display>

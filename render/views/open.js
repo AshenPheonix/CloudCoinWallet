@@ -1,6 +1,6 @@
-riot.tag2('open', '<p> How do you wish to enter your coins? </p> <ul> <li onclick="{manual}">Manually Entered</li> <li onclick="{qr}">Open a QR Code</li> <li onclick="{image}">Open A JPG</li> <li onclick="{text}">Open a Text File</li> </ul> <div id="update-target"> </div>', 'open li,[riot-tag="open"] li,[data-is="open"] li{ display: inline-block; font-size: 10pt; padding: 5px; } open li:hover,[riot-tag="open"] li:hover,[data-is="open"] li:hover{ cursor: pointer; }', '', function(opts) {
+riot.tag2('open', '<p> How do you wish to enter your coins? </p> <ul> <li onclick="{text}">Open a Text File</li> </ul> <p>Note :: under development</p> <div id="update-target"> </div>', 'open li,[riot-tag="open"] li,[data-is="open"] li{ display: inline-block; font-size: 10pt; padding: 5px; } open li:hover,[riot-tag="open"] li:hover,[data-is="open"] li:hover{ cursor: pointer; }', '', function(opts) {
 
-
+  require('../views/image.js')
   require('../views/text.js')
   const fs = require('fs');
 

@@ -1,2 +1,2 @@
-riot.tag2('index', '<p> Insert Successfull </p>', '', '', function(opts) {
+riot.tag2('index', '<p> Welcome to the Cloud Coin Wallet. </p>', '', '', function(opts) {
 });

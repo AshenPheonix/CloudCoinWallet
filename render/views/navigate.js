@@ -41,7 +41,9 @@ riot.tag2('navigate', '<ul> <li onclick="{home}">Home</li> <li onclick="{test}">
             }else {
 
               var toTest=JSON.parse(data);
-              if (toTest.coins!==undefined) {
+              if (toTest.cloudcoin!==undefined) {
+                toTest=toTest.cloudcoin
+              } else if (toTest.coins!==undefined) {
                 toTest=toTest.coins
               }
               var tempdate=new Date();
@@ -49,7 +51,7 @@ riot.tag2('navigate', '<ul> <li onclick="{home}">Home</li> <li onclick="{test}">
               tempED=tempdate.getMonth()+'-'+tempdate.getFullYear();
               $.each(toTest, function(indexC, valC) {
                 if (valC.sn!==undefined) {
-                  store.testing.push(new Caller(new CCoin(valC.sn,valC.nn||1,valC.ed||tempED,valC.an,valC.denomination||0,'text',filename)));
+                  store.testing.push(new Caller(new CCoin(valC.sn,valC.nn||1,valC.ed||tempED,valC.an,valC.denomination||0,'text','','none',0,'')));
                 }
               });
               watcher.trigger('validate');

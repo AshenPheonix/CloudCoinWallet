@@ -27,15 +27,16 @@
   <script>
     var fs=require('fs')
     self=this
+    var app=require('electron').remote.app
     this.on('mount',()=>{
-      fs.readFile('data/servers.json',(err,d) => {
+      fs.readFile(app.getPath('appData')+'/CCWallet/data/servers.json',(err,d) => {
         if (err) {
           console.log('upload failed');
         } else {
-          this.servers=JSON.parse(d);
-          this.init=true;
+          self.servers=JSON.parse(d);
+          self.init=true;
           watcher.trigger('start')
-          this.update();
+          self.update();
         }
       })
     })
@@ -44,7 +45,6 @@
       this.init=false;
       this.servers=store;
       this.update();
-
     })
 
     fail(which){

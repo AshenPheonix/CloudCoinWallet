@@ -28,7 +28,7 @@
                       backupArray.push(val[prop]);
                     }
                   }
-                  var sent=new CCoin(val.sn,val.nn||1,val.ed,backupArray,val.denomination||0,'text',valF);
+                  var sent=new CCoin(val.sn,val.nn||1,val.ed,backupArray,val.denomination||0,'text','','none',0,valF);
 
                   if (sent.ed==undefined) {
                     var tempdate=new Date();
@@ -40,14 +40,22 @@
                 fs.writeFile(__dirname+'/data/coins/current.ccc', JSON.stringify(CCC));
               })
             }else if (valF.substr(valF.length-4)=='json' || valF.substr(valF.length-3)=='ccc' || valF.substr(valF.length-5)=='stack') {
+              var dialog=require('electron').remote.dialog;
               fs.readFile(valF, 'utf-8',(err,data) => {
                 if (err) {
-                  console.error(err);
+                  dialog.showMessageBox({message:"File Not Found",buttons:['okay']})
                 }else {
                   //parsing
                   var toTest=JSON.parse(data);
                   if (toTest.coins!==undefined) {
                     toTest=toTest.coins
+                  }else if (toTest.cloudcoin!==undefined) {
+                    toTest=toTest.cloudcoin
+                  }else if (toTest.CloudCoin!==undefined){
+                    toTest=toTest.CloudCoin
+                  }else {
+                    dialog.showMessageBox({message:"File Format Not Allowed",buttons:['Okay']})
+                    return;
                   }
                   if (toTest.length!==undefined && toTest.length>1) {
                     var tempdate=new Date();

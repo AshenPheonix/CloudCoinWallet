@@ -1,6 +1,6 @@
 <index>
 <p>
-  Insert Successfull
+  Welcome to the Cloud Coin Wallet.
 </p>
 
 

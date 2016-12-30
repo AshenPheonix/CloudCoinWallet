@@ -8,10 +8,12 @@ Caller = class {
     this.fails=[];
     this.errors=[];
     this.reasons=[];
+    this.fixers=[];
+    var self=this;
   }
 
   validate(){
-    self=this
+    var self=this
     var denom=0;
     if (this.coin.sn>0&&this.coin.sn<2097153) {
       denom=1
@@ -32,25 +34,24 @@ Caller = class {
         an:self.coin.an[index],
         pan:self.coin.an[index]
       }
-      $.get(vals.protocol+'://'+vals.url+'/service/detect.'+vals.ext,sender,(dat) => {
+      $.get(vals.protocol+'://'+vals.url+'/service/detect',sender,(dat) => {
         var response=JSON.parse(dat);
         if (response.sn!=self.coin.sn) {
 
-        }else if (response.status=='pass') {
+        }else if (response.status=='pass' && response.sn==self.coin.sn) {
           self.success++;
-        }else {
-          self.fails.push(index)
+        }else{
+          self.fails.push(response.server.replace(/raida/gi,''))
           self.reasons.push(response.message);
         }
-        if (self.fails.length+self.success+self.errors.length==25&&self.success>=20) {
+        if (self.success==20) {
           store.currentHeld[0].push(self.coin)
           watcher.trigger('success')
+          store.toFix.push(this);
           self.fix();
-        }else{
-          if (store.failed.includes(self.coin)==false) {
-            store.failed.push({coin:self.coin,reasons:[self.reasons]})
-            watcher.trigger('CoinFail')
-          }
+        } else if (self.fails.length==6) {
+          watcher.trigger('CoinFail');
+          store.failed.push({coin:self.coin,reasons:self.reasons})
         }
       }).fail((err) => {
       })
@@ -58,12 +59,50 @@ Caller = class {
   }
 
   fix(){
-    console.log('fixing');
+    let self=this;
+    $.each(this.fails, function(indexFS, valFS) {
+      var accepted=[Number(valFS)-6,Number(valFS)-5,Number(valFS)-1,Number(valFS)+1,Number(valFS)+4,Number(valFS)+5,Number(valFS)+6];
+      $.each(accepted, function(index, val) {
+        if (val<0) {
+          val=val+25
+        }else if (val>24) {
+          val=val-25
+        }
+      });
+      $.each(accepted, function(indexGiven, valFixers) {
+        $.get('https://'+store.server[valFixers].url+'/service/get_ticket',{nn:self.coin.nn,sn:self.coin.sn,toserver:valFS,an:self.coin.an[valFixers],pan:self.coin.an[valFixers],denomination:self.coin.denomination},(ticket) => {
+          ticket=JSON.parse(ticket);
+          if(ticket.sn==self.coin.sn){
+            self.fixers.push({server:ticket.server.replace(/RAIDA/gi,''),message:ticket.message})
+          } else {
+
+          }
+          if (self.fixers.length==3) {
+            var tosend={
+              fromserver1:self.fixers[0].server,
+              message1:self.fixers[0].message,
+              fromserver2:self.fixers[1].server,
+              message2:self.fixers[1].message,
+              fromserver3:self.fixers[2].server,
+              message3:self.fixers[2].server,
+              pan:self.coin.an[valFS]
+            }
+            $.get('https://'+store.server[valFS].url+'/service/fix',tosend,(back) => {
+              var response=JSON.parse(back);
+              if (response.status=='success') {
+              }else {
+              }
+            })
+          }
+        })
+      });
+    });
   }
 
   take(){
     //getting random bytes
     rb(400,(err,bytes) => {
+      var self=this;
       if (err) {
         console.error('bytes not gotten ::'+err);
       }else {
@@ -79,6 +118,8 @@ Caller = class {
           PANArray.push(tempArray.substr(i*32,32))
         }
         $.each(store.server, function(index, vals) {
+          console.log(self.coin);
+          var listen=true;
           var sender={
             nn:self.coin.nn,
             sn:self.coin.sn,
@@ -86,7 +127,7 @@ Caller = class {
             an:self.coin.an[index],
             pan:PANArray[index]
           }
-          $.get(vals.protocol+'://'+vals.url+'/service/detect.'+vals.ext,sender,(dat) => {
+          $.get(vals.protocol+'://'+vals.url+'/service/detect',sender,(dat) => {
             var response=JSON.parse(dat);
             if (response.sn!=self.coin.sn) {
 
@@ -95,9 +136,13 @@ Caller = class {
             }else {
               self.fails.push(index)
             }
-            if (self.success>=20 && self.fails.length+self.success+self.errors.length==25) {
+            if (self.success==20) {
               store.staging.push(self.coin);
-            }else if (self.fails.length>5) {
+              listen=false;
+              store.currentDesired.shift();
+              watcher.trigger('take');
+            }else if (self.fails.length>5 && listen==true) {
+              listen=false;
               watcher.trigger('CoinFail')
             }else if (self.fails.length+self.success==25) {
               self.fix();
