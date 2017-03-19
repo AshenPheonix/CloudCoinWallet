@@ -137,7 +137,7 @@ Caller = class {
               self.fails.push(index)
             }
             if (self.success==20) {
-              store.staging.push(self.coin);
+              store.staging.push(sender);
               listen=false;
               store.currentDesired.shift();
               watcher.trigger('take');

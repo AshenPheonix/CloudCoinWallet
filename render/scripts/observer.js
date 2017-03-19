@@ -61,6 +61,7 @@ function spy(){
   })
 
   this.on('test', (d) => {
+    this.failed=false
     d.internal++;
     this.trigger('testRet')
   })
@@ -75,7 +76,7 @@ function spy(){
     store.testing.shift();
     this.trigger('validate')
     if (self.failed==false) {
-      failed=true;
+      self.failed=true;
       var remote=require('electron').remote;
       var dialog=remote.dialog
       dialog.showMessageBox({message:'One or more coins failed to get permission',buttons:['Okay']})
@@ -95,7 +96,7 @@ function spy(){
     var remote=require('electron').remote;
     var dialog=remote.dialog
     var app=remote.app
-    if (fs.existsSync(app.getPath('appData')+'/CCwallet')==false) {
+    if (fs.existsSync(app.getPath('appData')+'/CCWallet')==false) {
       fs.mkdir(app.getPath('appData')+'/CCWallet')
     }
 
@@ -151,51 +152,31 @@ function spy(){
   })
 
   this.on('sendFinished', () => {
-    /*let temp=[];
-    $.each(store.staging, function(index, val) {
-      if (val.type!='text') {
-        temp.push(val);
-        store.staging.splice(store.staging.indexOf(val));
-      }
-    });
 
-    $.each(temp, function(index, val) {
-      let buff=new Buffer.from(val.stringify());
-      fs.open(val.loc,'wx',(err,fd) => {
-        if (err) {
-          console.error(err);
-        } else {
-          fs.write(fd,buff,0,buff.length,20,(writeErr,written, writeBuff) => {
-          })
-        }
-      });
-    });
-    */
-    fs.writeFile(store.saveLocation, JSON.stringify({cloudcoin:store.staging}));
-    var tempArray=[];
-    $.each(store.staging,(index,item) => {
-      tempArray.push(item);
-    })
-    store.currentHeld.push(tempArray);
-    store.staging.length=0;
-    store.saveLocation='';
     let templocs=[];
     let tempSave=[[]]
     $.each(store.currentHeld, function(sectIndex, sect) {
       $.each(store.currentHeld, function(itemIndex, val) {
-        if (templocs.indexOf(val.loc)===-1) {
+        if (templocs.contains(val.loc)==false) {
           templocs.push(val.loc);
+          tempSave.push([val])
         }
         tempSave[templocs.indexOf(val.loc)].push(val);
       });
     });
 
-    /*
+    fs.writeFile(store.saveLocation, JSON.stringify({cloudcoin:store.staging}));
     $.each(templocs, function(index, val) {
-      fs.writeFile(val, JSON.stringify({cloudcoin:tempSave[index]}));
+      fs.writeFile(templocs,JSON.stringify({cloudcoin:tempSave[index]}))
     });
-    */
+    var tempArray=[];
+    $.each(store.staging,(index,item) => {
+      tempArray.push(item);
+    })
 
+    store.currentHeld.push(tempArray);
+    store.currentDesired.length=0;
+    store.saveLocation='';
     this.trigger('updateScreen')
   })
 }

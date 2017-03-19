@@ -35,9 +35,9 @@ riot.tag2('text', '', '', '', function(opts) {
                   }
                   CCC.coins.push(sent);
                 });
-                fs.writeFile(__dirname+'/data/coins/current.ccc', JSON.stringify(CCC));
+                fs.writeFile(app.app.getPath('appData')+'/CCWallet/current.stack', JSON.stringify({cloudcoin:CCC.coins}));
               })
-            }else if (valF.substr(valF.length-4)=='json' || valF.substr(valF.length-3)=='ccc' || valF.substr(valF.length-5)=='stack') {
+            }else if (valF.substr(valF.length-4)=='json' || valF.substr(valF.length-3)=='ccc' || valF.substr(valF.length-5)=='stack' || valF.substr(valF.length-5)=='Chest' || valF.substr(valF.length-5)=='chest') {
               var dialog=require('electron').remote.dialog;
               fs.readFile(valF, 'utf-8',(err,data) => {
                 if (err) {
@@ -76,6 +76,8 @@ riot.tag2('text', '', '', '', function(opts) {
                 }
 
               });
+            } else {
+              alert('file type not recognized');
             }
           });
         }
