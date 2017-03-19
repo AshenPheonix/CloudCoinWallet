@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "package-Sean": "electron-packager --platform=win32 --arch=x64 --overwrite ./",
+    "build":"electron-packager ./",
     "pack": "electron-packager ./ && build --dir --pd wallet-win32-x64",
     "dist": "electron-packager ./ && build --pd wallet-win32-x64 -p onTagOrDraft",
     "riotRender":"riot render/tags render/views",
