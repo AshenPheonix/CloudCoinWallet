@@ -1,0 +1,4 @@
+/data/coins/*
+/.vscode
+/dist/*
+*.zip
