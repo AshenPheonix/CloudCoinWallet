@@ -8,8 +8,7 @@
     "pack": "electron-packager ./ && build --dir --pd wallet-win32-x64",
     "dist": "electron-packager ./ && build --pd wallet-win32-x64",
     "riotRender":"riot render/tags render/views",
-    "test":"npm run riotRender && electron ./",
-    "postinstall": "install-app-deps"
+    "test":"npm run riotRender && electron ./"
   },
   "author": "Brandon Porter",
   "license": "MIT",
