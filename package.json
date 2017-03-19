@@ -6,7 +6,7 @@
   "scripts": {
     "package-Sean": "electron-packager --platform=win32 --arch=x64 --overwrite ./",
     "pack": "build --dir",
-    "dist": "riot render/tags render/views && electron-packager ./ && build wallet-win32-x64",
+    "dist": "build ./",
     "riotRender":"riot render/tags render/views",
     "test":"npm run riotRender && electron ./"
   },
@@ -37,7 +37,6 @@
     "appId": "com.cloudcoin.wallet",
     "mac": {
       "category": "public.app-category.finance"
-    },
-    "nodeGypRebuild": true
+    }
   }
 }
