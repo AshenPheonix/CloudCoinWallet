@@ -9,7 +9,9 @@ cache:
   - '%USERPROFILE%\.electron'
 
 environment:
-  -GH_TOKEN:
+
+  GH_TOKEN:
+
     secure: b004fed952377484ef58e3f4566ca458c0f22168
 
 init:
