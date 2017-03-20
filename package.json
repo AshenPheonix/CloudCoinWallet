@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "package-Sean": "electron-packager --platform=win32 --arch=x64 --overwrite ./",
-    "build":"electron-packager ./",
-    "pack": "electron-packager ./ && build --dir --pd wallet-win32-x64",
-    "dist": "electron-packager ./ --overwrite && build --pd wallet-win32-x64 -p onTagOrDraft",
+    "build":"electron-packager ./ --overwrite --arch=\"ia32,x64\" ",
+    "buildTravis":"electron-packager --platform=\"darwin,linux\" --arch=all --overwrite ./",
+    "pack": "electron-packager ./ \"Cloud Coin Wallet\" && build --pd \"Cloud Coin Wallet-win32-x64\"",
+    "distWin": "yarn run build  && build --pd wallet-win32-x64 -p onTagOrDraft && --overwrite && build --pd wallet-win32-ia32 -p onTagOrDraft",
+    "disTravis": "npm buildTravis && build --pd wallet-darwin-ia32 && build --pd wallet-darwin-x64 && build --pd wallet-linux-ia32 && build --pd wallet-linux-x64 && build --pd wallet-linux-armv7l",
     "riotRender":"riot render/tags render/views",
     "test":"npm run riotRender && electron ./"
   },

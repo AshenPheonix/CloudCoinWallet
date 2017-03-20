@@ -22,6 +22,6 @@ install:
   - yarn add electron-packager electron-builder@next --dev # force install next version to test electron-builder
 
 build_script:
-  - yarn run dist
+  - yarn run distWin
 
 test: off
