@@ -10,7 +10,8 @@ matrix:
     env: CC=clang CXX=clang++ npm_config_clang=1		      
     compiler: clang		
 
-node_js:		  - 6		
+node_js:		  
+  - 6		
 
 cache:		  
   directories:		     
