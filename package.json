@@ -49,7 +49,6 @@
     "mac": {
       "category": "public.app-category.finance"
     },
-    "provider":"github",
     "win":{
       "publish":["github"]
     }
