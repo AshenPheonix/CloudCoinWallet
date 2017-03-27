@@ -140,7 +140,7 @@ function spy(){
       });
       dialog.showSaveDialog({defaultPath:require('electron').remote.app.getPath('documents')},(b) => {
         if (b!==undefined) {
-          store.saveLocation=b+'.'+sum+'.stack';
+          store.saveLocation=b;
           this.trigger('take')
         }
       })

@@ -51,8 +51,7 @@
     },
     "provider":"github",
     "win":{
-      "publish":["github"],
-      "remoteReleases":"https://github.com/AshenPheonix/CloudCoinWallet"
+      "publish":["github"]
     }
   }
 }

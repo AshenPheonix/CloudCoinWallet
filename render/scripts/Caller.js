@@ -104,7 +104,8 @@ Caller = class {
     rb(400,(err,bytes) => {
       var self=this;
       if (err) {
-        console.error('bytes not gotten ::'+err);
+        alert('An error occured trying to get the bytes, file not written')
+        return;
       }else {
         //converting to a  useable form
         var tempArray=[];
