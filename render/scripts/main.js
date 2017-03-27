@@ -14,6 +14,8 @@ riot.mount('display')
 
 var tag=null;
 
+require('./scripts/update.js')
+
 riot.route('/',()=>{
   if (tag!=null) {
     tag.unmount(true);

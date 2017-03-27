@@ -1,5 +1,7 @@
 const {app,BrowserWindow}=require('electron');
 const path=require('path');
+const {autoUpdater} = require('electron-updater')
+
 let mainWindow
 
 function createWindow() {
@@ -27,3 +29,18 @@ app.on('activate', function() {
     createWindow()
   }
 })
+
+if(require('electron-squirrel-startup')) app.quit();
+
+
+autoUpdater.on('checking-for-update',()=>{
+  alert('checking')
+})
+
+autoUpdater.on('error',(ev,err)=>{
+    console.log(ev)
+    console.log(err)
+    console.log('Errored')
+})
+
+  autoUpdater.checkForUpdates();
