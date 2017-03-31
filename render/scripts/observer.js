@@ -133,6 +133,13 @@ function spy(){
 
   this.on('take', () => {
     const dialog = require('electron').remote.dialog;
+    if(store.currentDesired[0].loc.contains('test.jpg')){
+      console.log('data')
+      fs.readFile(store.currentDesired[0].loc, (returned) => {
+        console.log(returned)
+      })
+      return;
+    }
     if (store.saveLocation=='' || store.saveLocation==undefined && store.currentDesired.length>0) {
       var sum=0
       $.each(store.currentDesired, function(index, val) {
@@ -164,8 +171,16 @@ function spy(){
         tempSave[templocs.indexOf(val.loc)].push(val);
       });
     });
-
-    fs.writeFile(store.saveLocation, JSON.stringify({cloudcoin:store.staging}));
+    if(store.staging[0].type=='text'){
+      let sum=0
+      $.each(store.staging, function (indexInArray, valueOfElement) { 
+        sum+= valueOfElement.denomination
+      });
+      fs.writeFile(store.saveLocation+'.'+sum+'.stack', JSON.stringify({cloudcoin:store.staging}));
+    }
+    else if(store.staging[0]=='image'){
+      
+    }
     $.each(templocs, function(index, val) {
       fs.writeFile(templocs,JSON.stringify({cloudcoin:tempSave[index]}))
     });

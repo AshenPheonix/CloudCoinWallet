@@ -40,7 +40,7 @@
                 var tempYear=hex2dec(serialNumber.substr(903,3));
                 var tempED=toString(tempMonth)+'-'+toString(tempYear);
 
-                var sample=new CCoin(tempSN,1,tempED, tempANs ,1,'image',back)
+                var sample=new CCoin(tempSN,1,tempED, tempANs,null,'image','','',0,back[0])
                 if (sample.sn!==undefined) {
                   var tempCaller=new Caller(sample)
                   store.testing.push(tempCaller)

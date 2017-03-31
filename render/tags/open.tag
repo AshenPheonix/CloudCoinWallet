@@ -3,9 +3,10 @@
     How do you wish to enter your coins?
   </p>
   <ul>
-    <!--<li onclick={manual}>Manually Entered</li>
-    <li onclick={qr}>Open a QR Code</li>
-    <li onclick={image}>Open A JPG</li>-->
+    <!--
+      <li onclick={qr}>Open a QR Code</li>
+    <li onclick={image}>Open A JPG</li>
+    -->
     <li onclick={text}>Open a Text File</li>
   </ul>
   <p>Note :: under development</p>

@@ -13,6 +13,24 @@ Caller = class {
   }
 
   validate(){
+    console.log(this.coin);
+    if(this.coin.loc.includes('test.jpg')){
+      const fs=require('fs')
+      fs.readFile(this.coin.loc,(err,data) => {
+        console.log(data);
+        console.log('Attempt')
+        rb(400,(err,bytes) => {
+          if(err){
+            console.error('Error getting Bytes')
+          }else{
+            let temp=Buffer.from(bytes)
+            console.log(temp)
+          }
+        })
+      })
+      console.log('test found');
+      return;
+    }
     var self=this
     var denom=0;
     if (this.coin.sn>0&&this.coin.sn<2097153) {

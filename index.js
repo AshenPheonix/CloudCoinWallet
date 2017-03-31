@@ -30,10 +30,10 @@ app.on('activate', function() {
   }
 })
 
-if(require('electron-squirrel-startup')) app.quit();
+//if(require('electron-squirrel-startup')) app.quit();
 
 
-autoUpdater.on('checking-for-update',()=>{
+/*autoUpdater.on('checking-for-update',()=>{
   alert('checking')
 })
 
@@ -44,3 +44,4 @@ autoUpdater.on('error',(ev,err)=>{
 })
 
   autoUpdater.checkForUpdates();
+*/
