@@ -3,7 +3,6 @@
   "version": "1.5.1",
   "description": "Wallet for Cloud Coins",
   "main": "index.js",
-  
   "scripts": {
     "package-Sean": "electron-packager --platform=win32 --arch=x64 --overwrite ./",
     "build": "electron-packager ./ --overwrite --arch=\"ia32,x64\" ",
@@ -15,11 +14,9 @@
     "test": "npm run riotRender && electron ./",
     "testClean": "electron ./"
   },
-
   "author": "Brandon Porter",
   "license": "MIT",
-  "repository":"https://github.com/AshenPheonix/CloudCoinWallet",
-  
+  "repository": "https://github.com/AshenPheonix/CloudCoinWallet",
   "devDependencies": {
     "buffer-to-string": "^0.1.0",
     "dec-to-hex": "^2.0.0",
@@ -39,9 +36,10 @@
     "bootstrap": "^3.3.7",
     "convert-hex": "^0.1.0",
     "csvtojson": "^1.0.3",
+    "electron-builder-squirrel-windows": "^16.7.0",
+    "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.1.1",
     "random-bytes": "^1.0.0",
-    "electron-squirrel-startup": "^1.0.0",
     "riot": "^2.6.4"
   },
   "build": {
@@ -49,9 +47,11 @@
     "mac": {
       "category": "public.app-category.finance"
     },
-    "win":{
-      "target":"squirrel",
-      "publish":["github"]
+    "win": {
+      "target": "squirrel",
+      "publish": [
+        "github"
+      ]
     }
   }
 }
