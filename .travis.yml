@@ -30,6 +30,9 @@ addons:
       - xorriso
       - xvfb
 
+env:
+  - CSC_LINK = "certs/appleCerts.p12"
+
 install:
   - nvm install 6
   - npm install electron-builder@next electron-packager
