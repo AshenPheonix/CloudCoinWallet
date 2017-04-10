@@ -6,6 +6,7 @@ language: c
 matrix:
   include:
     - os: osx
+      env: CSC_LINK="certs/appleCerts.p12"
     - os: linux
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
@@ -29,10 +30,7 @@ addons:
       - xz-utils
       - xorriso
       - xvfb
-
-env:
-  - CSC_LINK = "certs/appleCerts.p12"
-
+      
 install:
   - nvm install 6
   - npm install electron-builder@next electron-packager
