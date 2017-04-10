@@ -133,13 +133,6 @@ function spy(){
 
   this.on('take', () => {
     const dialog = require('electron').remote.dialog;
-    if(store.currentDesired[0].loc.contains('test.jpg')){
-      console.log('data')
-      fs.readFile(store.currentDesired[0].loc, (returned) => {
-        console.log(returned)
-      })
-      return;
-    }
     if (store.saveLocation=='' || store.saveLocation==undefined && store.currentDesired.length>0) {
       var sum=0
       $.each(store.currentDesired, function(index, val) {
@@ -171,16 +164,54 @@ function spy(){
         tempSave[templocs.indexOf(val.loc)].push(val);
       });
     });
-    if(store.staging[0].type=='text'){
-      let sum=0
-      $.each(store.staging, function (indexInArray, valueOfElement) { 
-        sum+= valueOfElement.denomination
-      });
-      fs.writeFile(store.saveLocation+'.'+sum+'.stack', JSON.stringify({cloudcoin:store.staging}));
-    }
-    else if(store.staging[0]=='image'){
-      
-    }
+    $.each(store.staging, function (Index, Coin) { 
+       if(Coin.type=='image'){
+         fs.readFile(coin.loc,(err,back) => {
+           let temp=back
+           let tempAN=Coin.AN.toString()
+           tempAN.replace(',','');
+           let aoid=Buffer.from([0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x03,0x13,0x0,0x0])
+           let HC=Buffer.from([0x0,0x0])
+           let date=new Date();
+           let d=(date.getMonth()+1).toString();
+           if(d.length==1)
+             d='0'+d
+           let y=Buffer.from(d + date.getFullYear().toString.sub(1));
+           let AN=Buffer.from(tempAN,'hex')
+           let finalEdit=Buffer.from([AN,aoid,HC,y])
+
+           fs.writeFile(store.saveLocation+'.jpg',Coin,(err) => {
+             if(err){
+               alert("Error generated during save")
+               return
+             }else{
+               fs.open(store.saveLocation+'.jpg','r+',(err,fd) => {
+                 if(err){
+                   alert('error trying to save coin in image');
+                   return;
+                 }else{
+                   fs.write(fd,finalEdit,(err,bytes) => {
+                     if(err){
+                       alert("Error writing bytes")
+                       return;
+                     }else{
+                       fs.close(fd)
+                     }
+                   })
+                 }
+               })
+             }
+           })
+         })
+       }else if(Coin.type=='text'){
+         delete Coin.type
+         fs.writeFile(`${Coin.denomination}.${store.saveLocation}.${Index}.stack`,JSON.stringify({cloudcoin:Coin}),(err) => {
+           if(err){
+             alert("Error writing file")
+           }
+         });
+       }
+    });
     $.each(templocs, function(index, val) {
       fs.writeFile(templocs,JSON.stringify({cloudcoin:tempSave[index]}))
     });

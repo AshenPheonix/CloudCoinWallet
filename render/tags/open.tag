@@ -5,8 +5,8 @@
   <ul>
     <!--
       <li onclick={qr}>Open a QR Code</li>
-    <li onclick={image}>Open A JPG</li>
     -->
+    <li onclick={image}>Open A JPG</li>
     <li onclick={text}>Open a Text File</li>
   </ul>
   <p>Note :: under development</p>
