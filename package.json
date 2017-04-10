@@ -1,6 +1,6 @@
 {
   "name": "wallet",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Wallet for Cloud Coins",
   "main": "index.js",
   
@@ -52,9 +52,9 @@
     "win":{
       "target":"squirrel",
       "publish":["github"]
-    },
+    }/*,
     "config":{
       "provider":"github"
-    }
+    }*/
   }
 }
