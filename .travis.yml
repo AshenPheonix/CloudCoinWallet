@@ -6,7 +6,7 @@ language: c
 matrix:
   include:
     - os: osx
-      env: CSC_LINK="certs/appleCerts.p12"
+      env: CSC_LINK="./certs/appleCerts.p12"
     - os: linux
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
