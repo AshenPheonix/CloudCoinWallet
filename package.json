@@ -43,7 +43,7 @@
     "riot": "^2.6.4"
   },
   "build": {
-    "appId": "com.cloudcoin.wallet",
+    "appId": "com.CloudCoinWallet.app",
     "mac": {
       "category": "public.app-category.finance"
     },
