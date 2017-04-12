@@ -9,7 +9,7 @@
     "buildTravis": "electron-packager --platform=\"darwin,linux\" --arch=all --overwrite ./",
     "pack": "electron-packager ./ \"Cloud Coin Wallet\" && build --pd \"Cloud Coin Wallet-win32-x64\" ",
     "distWin": "yarn run build  && build --pd wallet-win32-x64 -p onTagOrDraft --config.productName=\"Cloud Coin Wallet Win 64\"  && build --pd wallet-win32-ia32 -p onTagOrDraft --config.productName=\"Cloud Coin Wallet Win 32\"",
-    "distTravis": "electron-packager --platform=\"darwin,linux\" --arch=all --overwrite ./ ; build --pd wallet-darwin-x64 ; build --pd wallet-linux-ia32 ; build --pd wallet-linux-x64 ; build --pd wallet-linux-armv7l",
+    "distTravis": "electron-packager --platform=\"darwin,linux\" --overwrite ./ ; build --pd wallet-darwin-x64 ; build --pd wallet-linux-ia32 ; build --pd wallet-linux-x64 ; build --pd wallet-linux-armv7l",
     "riotRender": "riot render/tags render/views",
     "test": "npm run riotRender && electron ./",
     "testClean": "electron ./"
