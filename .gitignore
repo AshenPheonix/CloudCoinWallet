@@ -3,3 +3,4 @@
 /dist/*
 *.zip
 unsecured
+/node_modules
