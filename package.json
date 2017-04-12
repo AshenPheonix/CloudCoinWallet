@@ -9,7 +9,7 @@
     "buildTravis": "electron-packager --platform=\"darwin,linux\" --arch=all --overwrite ./",
     "pack": "electron-packager ./ \"Cloud Coin Wallet\" && build --pd \"Cloud Coin Wallet-win32-x64\" ",
     "distWin": "yarn run build  && build --pd wallet-win32-x64 -p onTagOrDraft --config.productName=\"Cloud Coin Wallet Win 64\"  && build --pd wallet-win32-ia32 -p onTagOrDraft --config.productName=\"Cloud Coin Wallet Win 32\"",
-    "distTravis": "electron-packager --platform=\"darwin,linux\" --overwrite ./ ; build --pd wallet-darwin-x64 ; build --pd wallet-linux-ia32 ; build --pd wallet-linux-x64 ; build --pd wallet-linux-armv7l",
+    "distTravis": "electron-packager --platform=\"darwin,linux\" --overwrite ./ && build --pd wallet-darwin-x64 && build --pd wallet-linux-ia32 && build --pd wallet-linux-x64 && build --pd wallet-linux-armv7l",
     "riotRender": "riot render/tags render/views",
     "test": "npm run riotRender && electron ./",
     "testClean": "electron ./"
@@ -21,6 +21,7 @@
     "buffer-to-string": "^0.1.0",
     "dec-to-hex": "^2.0.0",
     "electron": "^1.4.4",
+    "electron-builder": "^16.8.3",
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^1.11.0",
     "fast-csv": "^2.3.0",
@@ -36,14 +37,15 @@
     "bootstrap": "^3.3.7",
     "convert-hex": "^0.1.0",
     "csvtojson": "^1.0.3",
-    "electron-builder-squirrel-windows": "^16.7.0",
+    "electron-builder-squirrel-windows": "^16.8.3",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^1.12.0",
     "jquery": "^3.1.1",
     "random-bytes": "^1.0.0",
     "riot": "^2.6.4"
   },
   "build": {
-    "appId": "com.CloudCoinWallet.app",
+    "appId": "app.CloudCoinWallet.app",
     "mac": {
       "category": "public.app-category.finance"
     },
