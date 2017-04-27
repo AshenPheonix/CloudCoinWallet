@@ -44,4 +44,4 @@ before_script:
   - sleep 3
 
 script:
-  - npm run distTravis
+  - npm run dist
