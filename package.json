@@ -10,7 +10,7 @@
     "test": "npm run riotRender && electron ./",
     "testClean": "electron ./",
     "dist": "build -p onTagOrDraft",
-    "distAppveyor": "build -p onTaOrDraft"
+    "distAppveyor": "build -p onTagOrDraft"
   },
   "license": "MIT",
   "repository": "https://github.com/AshenPheonix/CloudCoinWallet",
