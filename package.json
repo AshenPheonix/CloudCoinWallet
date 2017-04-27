@@ -9,7 +9,7 @@
     "riotRender": "riot render/tags render/views",
     "test": "npm run riotRender && electron ./",
     "testClean": "electron ./",
-    "dist" : "build -ml --x64 --ia32 -p onTagOrDraft",
+    "dist": "build -ml --x64 --ia32 -p onTagOrDraft",
     "distAppveyor": "build "
   },
   "license": "MIT",
@@ -23,6 +23,7 @@
     "dec-to-hex": "^2.0.0",
     "electron": "^1.4.4",
     "electron-builder": "^16.8.3",
+    "electron-installer-windows": "^0.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^1.14.2",
     "fast-csv": "^2.3.0",
