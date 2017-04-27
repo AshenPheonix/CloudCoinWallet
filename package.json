@@ -1,8 +1,4 @@
 {
-  "name": "wallet",
-  "version": "1.5.11",
-  "description": "Wallet for Cloud Coins",
-  "main": "index.js",
   "scripts": {
     "package-Sean": "electron-packager --platform=win32 --arch=x64 --overwrite ./",
     "build": "electron-packager ./ --overwrite --arch=\"ia32,x64\" ",
@@ -12,42 +8,39 @@
     "distTravis": "electron-packager --platform=\"darwin,linux\" --overwrite ./ && build --pd wallet-darwin-x64 && build --pd wallet-linux-x64",
     "riotRender": "riot render/tags render/views",
     "test": "npm run riotRender && electron ./",
-    "testClean": "electron ./"
+    "testClean": "electron ./",
+    "dist" : "build -mwl --x64 --ia32 -p onTagOrDraft"
   },
-  "author": "Brandon Porter",
   "license": "MIT",
   "repository": "https://github.com/AshenPheonix/CloudCoinWallet",
   "devDependencies": {
+    "any-base": "^1.0.1",
+    "bootstrap": "^3.3.7",
     "buffer-to-string": "^0.1.0",
+    "convert-hex": "^0.1.0",
+    "csvtojson": "^1.1.4",
     "dec-to-hex": "^2.0.0",
     "electron": "^1.4.4",
     "electron-builder": "^16.8.3",
     "electron-squirrel-startup": "^1.0.0",
-    "electron-updater": "^1.11.0",
+    "electron-updater": "^1.14.2",
     "fast-csv": "^2.3.0",
     "hex": "^0.1.0",
     "jpeg-exif": "^1.0.5",
     "jpeg-marker-stream": "^1.0.0",
+    "jquery": "^3.2.1",
     "md5": "^2.2.1",
     "md5-hex": "^1.3.0",
-    "number-convert": "^1.0.0"
-  },
-  "dependencies": {
-    "any-base": "^1.0.0",
-    "bootstrap": "^3.3.7",
-    "convert-hex": "^0.1.0",
-    "csvtojson": "^1.0.3",
-    "electron-builder-squirrel-windows": "^16.8.3",
-    "electron-squirrel-startup": "^1.0.0",
-    "electron-updater": "^1.12.0",
-    "jquery": "^3.1.1",
+    "number-convert": "^1.0.0",
     "random-bytes": "^1.0.0",
-    "riot": "^2.6.4"
+    "riot": "^3.4.3",
+    "riot-router": "^0.9.7"
   },
   "build": {
     "appId": "app.CloudCoinWallet.app",
     "mac": {
-      "category": "public.app-category.finance"
+      "category": "public.app-category.finance",
+      "target": "dmg"
     },
     "win": {
       "target": "squirrel",
