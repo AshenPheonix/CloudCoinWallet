@@ -1,0 +1,19 @@
+{
+    "name": "cloudcoinwallet",
+    "version": "1.5.11",
+    "description": "Wallet for Cloud Coins",
+    "main": "index.js",
+    "author":"Brandon Porter aka Dev1 Cloud Coin Consortium",
+    "dependencies": {
+    "any-base": "^1.0.0",
+    "bootstrap": "^3.3.7",
+    "convert-hex": "^0.1.0",
+    "csvtojson": "^1.0.3",
+    "electron-builder-squirrel-windows": "^16.8.3",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^1.12.0",
+    "jquery": "^3.1.1",
+    "random-bytes": "^1.0.0",
+    "riot": "^2.6.4"
+  }
+}
